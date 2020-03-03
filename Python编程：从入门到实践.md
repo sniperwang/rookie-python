@@ -137,7 +137,7 @@ print(favorite_language.rstrip())
 
 #
 
-## 3 列表
+## 3 列表(List)
 
 ### 3.1 列表是什么
 
@@ -196,6 +196,7 @@ list[1] = 'new elem'
   ```
 
 - 从列表中删除元素 
+
   - :one:**del**
 
   ```python
@@ -407,7 +408,7 @@ friend_foods = my_foods
 # 二者不一样
 ```
 
-### 4.5 元组
+### 4.5 元组(Tuple)
 
 需要创建一系列不可修改的元素时，元组可以满足。即将不可变的列表称为元组。
 
@@ -502,9 +503,9 @@ else:
 
 #### 5.4.3 使用多个列表
 
-## 6 字典
+## 6 字典(Dict)
 
-字典是一系列**键值对**，每个键都与一个值相关联，值可以是数字、字符串、列表、字典。事实上，可以将任何Python对象用作字典中的值。
+字典是一系列**键值对**，每个键都与一个值相关联，值可以是数字、字符串、列表、字典。事实上，可以将任何Python对象用作字典中的值。是无序的
 
 字典是一种动态结构，可对字典中的数据进行操作。
 
@@ -559,7 +560,7 @@ sort(dict.keys())
 
 dict.values()
 
-#### 6.3.5 集合
+#### 6.3.5 集合(Set)
 
 集合类似于列表，但是每个元素都是独一无二的，即没有重复的元素。
 
@@ -818,9 +819,395 @@ while True:
 
 ### 8.4 传递列表
 
+```python
+def greet_users(names):
+    for name in names:
+        msg = "Hello, " + name.title() + "!"
+        print(msg)
+usernames = ['hannah', 'ty', 'margot']
+greet_users(usernames)
 ```
 
+#### 8.4.1 在函数中修改列表
+
+#### 8.4.2 禁止函数修改列表
+
+利用切片，使用是切片列表，而不是原列表
+
+### 8.5 传递任意数量的实参
+
+***parameter**
+
+```python
+def make_pizza(*toppings):
+    print(toppings)
+make_pizza('pepperoni')
+make_pizza('mushrooms', 'green peppers', 'extra cheese')
+```
+
+形参名***toppings**中的星号让Python创建一个名为toppings的**空元组**，并将收到的所有值都封装到这个元组中。
+
+
+
+#### 8.5.1 结合使用位置实参和任意数量实参
+
+```python
+def make_pizza(size, *toppings):
+    print("\nMaking a " + str(size) + 
+         "-inch pizza with the following toppings:")
+    for topping in toppings:
+        print("- " + topping)
+make_pizza(16, 'pepperoni')
+make_pizza(12, 'mushrooms', 'green peppers', 'extra cheese')
 ```
 
 
+
+#### 8.5.2 使用任意数量的关键字实参
+
+** **user_info** 中的两个星号让Python创建一个名为user_info的空字典，并将接收到的所有名称-值对都封装到这个字典中。
+
+```python
+def build_profile(first, last, **user_info):
+    profile = {}
+    profile['first_name'] = first
+    profile['last_name'] = last
+    for key, value in user_info.items():
+        profile['key'] = value
+    return profile
+user_profile = build_profile('albert', 'einstein',
+                            location='princeton',
+                            field='physics')
+print(user_profile)
+```
+
+
+
+### 8.6 将函数存储在模块中
+
+模块是扩展名为.py的文件
+
+#### 8.6.1 导入整个模块
+
+import module_name
+
+#### 8.6.2 导入特定的函数
+
+from module_name import function_name
+
+from module_name import func_0, func_1, func_2
+
+#### 8.6.3 使用as给函数指定别名
+
+from module_name import function_name as new_name
+
+#### 8.6.4 使用as给模块指定别名
+
+import module_name as new_name
+
+#### 8.6.5 导入模块中的所有函数
+
+from module_name import *
+
+### 8.7 函数编写指南
+
+应给函数指定描述性名称，且只在其中使用小写字母和下划线。
+
+每个函数都应包含简要地阐述其功能的注释，该注释应紧跟在函数定义后面。
+
+
+
+## 9 类
+
+### 9.1 创建和使用类
+
+#### 9.1.1 创建Dog类
+
+```python
+class Dog():
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        
+    def sit(self):
+        print(self.name.title() + " is now sitting.")
+    
+    def roll_over(self):
+        print(self.name.title() + " rolled over.")
+```
+
+**\__init__()**
+
+:slightly_smiling_face: 每当根据Dog类创建新实例时，Python都会自动运行init()。
+
+init()包含三个形参：self、name和age。self必不可少，还必须位于其他形参的前面。
+
+为何必须在方法定义中包含形参self呢？
+
+因为Python调用这个\__init__() 方法来创建Dog实例时，将自动传入实参self。
+
+每个与类相关联的方法调用都自动传递实参self，它是一个指向实例本身的引用，让实例能够访问类中的属性和方法。
+
+#### 9.1.2 根据类创建实例
+
+```python
+my_dog = Dog('willie', 6)
+my_dog.sit()
+my_dog.roll_over()
+```
+
+这里使用的是前一个示例中编写的Dog类。
+
+Python使用实参'willie'和6调用Dog类中的方法\__init__()
+
+### 9.2 使用类和实例
+
+#### 9.2.1 Car类
+
+```python
+class Car():
+    def __init__(self, make, model, year):
+        self.make = make
+        self.model = model
+        self.year = year
+     
+    def get_descriptive_name(self):
+        long_name = str(self.year) + ' ' + self.make + ' ' + self.model
+        return long_name
+    
+my_new_car = Car('audi', 'a4', 2016)
+print(my_new_car.get_descriptive_name())
+```
+
+#### 9.2.2 给属性指定默认值
+
+```python
+class Car():
+    def __init__(self, make, model, year):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.odometer_reading = 0
+        
+    def get_descriptive_name(self):
+        pass
+    
+    def read_odometer(self):
+        print("This car has " + str(self.odometer_reading) + " miles              on it.")
+
+my_new_car = Car('audi', 'a4', 2016)
+print(my_new_car.get_descriptive_name())
+my_new_car.read_odometer()
+```
+
+#### 9.2.3 修改属性的值
+
+1. 直接修改属性的值
+
+   ```python
+   class Car():
+       pass
+   my_new_car = Car('audi', 'a4, 2016')
+   print(my_new_car.get_descriptive_name())
+   
+   my_new_car.odometer_reading = 23
+   my_new_car.read_odometer()
+   ```
+
+2. 通过方法修改属性的值
+
+   ```python
+   class Car():
+       # --snip--
+       def update_odometer(self, mileage):
+           self.odometer_reading = mileage
+           
+   # ...
+   my_new_car.update_odometer(23)
+   ```
+
+3. 通过方法对属性的值进行递增
+
+   ```python
+   # 节选代码
+   self.odometer_reading += miles
+   ```
+
+### 9.3 继承
+
+一个类继承另一个类时，它将自动获取另一个类的所有属性和方法；原有的类成为父类，而新类成为子类。
+
+#### 9.3.1 子类的方法\__init__()
+
+创建子类的实例时，Python首先需要完成的任务是给父类的所有属性赋值。
+
+```python
+class Car():
+    def __init__(self, make, model, year):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.odometer_reading = 0
+        
+    def get_descriptive_name(self):
+        long_name = str(self.year) + ' ' + self.make + ' ' + self.model
+        return long_name
+    
+    def read_odometer(self):
+        print("This car has " + str(self.odometer_reading) + " miles on it.")
+        
+    def update_odometer(self, mileage):
+        if mileage >= self.odometer_reading:
+            self.odometer_reading = mileage
+        else:
+            print("error.....")
+            
+    def increment_odometer(self, miles):
+        self.odometer_reading += miles
+        
+class ElectricCar(Car):
+    def __inti__(self, makem model, year):
+        super().__init__(make, model, year)
+        
+my_tesla = ElectricCar('tesla', 'model', 2016)
+print(my_tesla.get_descriptive_name())
+```
+
+#### 9.3.2 给子类定义属性和方法
+
+````python
+class Car():
+    pass
+
+class ElectricCar(Car):
+    def __init__(self, make, model, year):
+        super().__init__(make, model, year)
+        self.battery_size = 70
+        
+    def describe_battry(self):
+        print("This car has a " + str(self.battery_size) + "-kwh battry.")
+        
+my_tesla = ElectricCar('tesla', 'model', 2016)
+print(my_tesla.get_descriptive_name())
+my_tesla.describe_battry()
+````
+
+#### 9.3.3 重写父类的方法
+
+子类定义的该方法，需要与父类中的方法名称一样
+
+#### 9.3.4 将实例用作属性
+
+把所有的属性都放入到一个类中，势必会很冗杂，所以按照大鱼吃小鱼，小鱼吃虾米的思想，把大类拆成小类，小类再分成具有独特属性和功能的小小类。
+
+```python
+class Car():
+    pass
+
+class Battry():
+    def __init__(self, battery_size=70):
+        self.battry_size = battery_size
+        
+    def describe_battery(self):
+        print("...")
+        
+class ElectricCar(Car):
+    def __init__(self, make, model, year):
+        super().__init__(make, model, year)
+        self.battery = Battery()
+        
+my_tesla = ElectricCar('tesla', 'model', 2016)
+print(my_tesla.get_descriptive_name())
+my_tesla.battery.describe_battery()
+```
+
+### 9.4 导入类
+
+#### 9.4.1 导入单个类
+
+#### 9.4.2 在一个模块中存储多个类
+
+#### 9.4.3 从一个模块中导入多个类
+
+#### 9.4.4 导入整个模块
+
+#### 9.4.5 导入模块中的所有类
+
+### 9.5 Python标准库
+
+### 9.6 类编码风格
+
+类名应采用驼峰命名法，即将类名中的每个单词的首字母都大写，而不使用下划线。
+
+实例名和模块名都采用小写格式，并在单词之间加上下划线。
+
+在类中，可使用一个空行来分隔方法；
+
+在模块中，可使用两个空行来分隔类。
+
+需要同时导入标准库中的模块和你编写的模块时，先编写导入标准库模块的import语句，再添加一个空行，然后编写导入你自己编写的模块的import语句。
+
+## 10 文件和异常
+
+### 10.1 从文件读取数据
+
+#### 10.1.1 读取整个文件
+
+```python
+with open('pi_digits.txt') as file_object:
+    contents = file_object.read()
+    print(contents)
+```
+
+read()到达文件末尾时返回一个空字符串
+
+#### 10.1.2 文件路径
+
+Linux和OSX中，/
+
+Windows中，\
+
+相对文件路径和绝对文件路径
+
+#### 10.1.3 逐行读取
+
+for
+
+#### 10.1.4 创建一个包含文件各行内容的列表
+
+#### 10.1.5 使用文件的内容
+
+### 10.2 写入文件
+
+#### 10.2.1 写入空文件
+
+```python
+filename = 'programming.txt'
+with open(filename, 'w') as file_object:
+    file_object.write("I Love programming.")
+```
+
+#### 10.2.2 写入多行
+
+#### 10.2.3 附加到文件
+
+附加模式'a'
+
+### 10.3 异常
+
+try-except
+
+### 10.4 存储数据
+
+json
+
+### 10.5 重构
+
+代码重构很重要
+
+## 11 测试
+
+1. 单元测试
+2. 用例测试
+3. 全覆盖测试
 
