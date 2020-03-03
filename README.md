@@ -1,2 +1,2 @@
 # rookie-pyton
-step1：I'm a rookie
+Step1：I'm a rookie!
