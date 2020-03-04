@@ -12,6 +12,12 @@ https://www.python.org/downloads/
 
 https://docs.python.org/3/
 
+---
+
+[toc]
+
+---
+
 ## 1 起步
 
 ### 1.1 搭建环境
