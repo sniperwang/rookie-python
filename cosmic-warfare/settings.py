@@ -2,10 +2,10 @@
 class Settings():
 
     def __init__(self):
-        self.screen_width = 300
-        self.screen_height = 500
+        self.screen_width = 900
+        self.screen_height = 600
         self.bg_color = (230, 230, 230)
-        self.ship_speed_factor = 0.3
+        self.ship_speed_factor = 0.6
 
         self.bullet_speed_factor = 1
         self.bullet_width = 3
